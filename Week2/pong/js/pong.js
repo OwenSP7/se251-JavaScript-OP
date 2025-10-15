@@ -10,11 +10,11 @@ var fy = .97
 
 //Player array set up
 const player = []
-p1 = new Player
-p1.pad = new Box
-p2 = new Player
-p2.pad = new Box
-player.push()
+player1 = new Player
+player1.pad = new Box
+player2 = new Player
+player2.pad = new Box
+player.push(player1,player2)
 
 //p1 setup
 var p1 = new Box();
