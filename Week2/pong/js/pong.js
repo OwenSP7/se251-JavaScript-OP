@@ -8,6 +8,14 @@ var timer = setInterval(main, 1000/60)
 //global friction variable
 var fy = .97
 
+//Player array set up
+const player = []
+p1 = new Player
+p1.pad = new Box
+p2 = new Player
+p2.pad = new Box
+player.push()
+
 //p1 setup
 var p1 = new Box();
 p1.w = 20
