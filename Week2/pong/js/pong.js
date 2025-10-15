@@ -1,6 +1,7 @@
 //canvas and context
 var c = document.querySelector(`#pong`)
 var ctx = c.getContext(`2d`)
+var sb = document.querySelectorAll(`#score`)
 
 //timer to make the game run at 60fps
 var timer = setInterval(main, 1000/60)
@@ -102,12 +103,18 @@ function main()
     {
         ball.x = c.width/2
         ball.y  =c.height/2
+
+        player[1].score+=1
+        console.log(player[1].score)
     }
 
     if(ball.x > 800)
     {
         ball.x = c.width/2
         ball.y  =c.height/2
+
+        player[0].score+=1
+        console.log(player[0].score)
     }
     
     if(ball.x > c.width)
