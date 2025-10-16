@@ -1,7 +1,7 @@
 //canvas and context
 var c = document.querySelector(`#pong`)
 var ctx = c.getContext(`2d`)
-var sb = document.querySelectorAll(`#score`)
+
 
 //timer to make the game run at 60fps
 var timer = setInterval(main, 1000/60)
@@ -42,6 +42,10 @@ ball.vx = -2
 ball.vy = -2
 ball.color = `black`
 
+// Sb set up
+let sb = document.querySelectorAll("#score div");
+
+
 function main()
 {
     //erases the canvas
@@ -68,34 +72,28 @@ function main()
     {
         pad[1].vy += pad[1].force
     }
-    //applies friction
-    pad[0].vy *= fy
-    pad[1].vy *= fy
-    //player movement
-    pad[0].move();
-    pad[1].move();
 
+    //applies friction and movement for paddles
+    for (let i = 0; i < pad.length; i++) 
+    {
+        pad[i].vy *= fy
+        pad[i].move()
+    }
+
+    
     //ball movement
     ball.move()
 
-    //p1 collision
-    if(pad[0].y < 0+pad[0].h/2)
+    for (let i = 0; i < pad.length; i++) 
     {
-        pad[0].y = 0+pad[0].h/2
-    }
-    if(pad[0].y > c.height-pad[0].h/2)
-    {
-        pad[0].y = c.height-pad[0].h/2
-    }
-
-    if(pad[1].y < 0+pad[1].h/2)
-    {
-        pad[1].y = 0+pad[1].h/2
-    }
-
-    if(pad[1].y > c.height-pad[1].h/2)
-    {
-        pad[1].y = c.height-pad[1].h/2
+        if(pad[i].y < 0 + pad[i].h / 2) 
+        {
+            pad[i].y = 0 + pad[i].h / 2
+        }
+        if(pad[i].y > c.height - pad[i].h / 2) 
+        {
+            pad[i].y = c.height - pad[i].h / 2
+        }
     }
 
     //ball collision 
@@ -135,22 +133,35 @@ function main()
        
     }
 
-    //p1 with ball collision
-    if(ball.collide(pad[0]))
+    //paddle with ball collision
+    for (let i = 0; i < pad.length; i++) 
     {
-        ball.x = pad[0].x + pad[0].w/2 + ball.w/2
-        ball.vx = -ball.vx;
+        if(ball.collide(pad[i])) 
+        {
+            if (i === 0) 
+            {
+                ball.x = pad[i].x + pad[i].w / 2 + ball.w / 2
+            } else 
+            {
+                ball.x = pad[i].x - pad[i].w / 2 - ball.w / 2
+            }
+            ball.vx = -ball.vx;
+        }
     }
 
-    //p2 with ball collision
-    if(ball.collide(pad[1]))
-    {
-        ball.x = pad[1].x - pad[1].w/2 - ball.w/2
-        ball.vx = -ball.vx;
-    }
-
+    
     //draw the objects
-    pad[0].draw()
-    pad[1].draw()
+    for (let i = 0; i < pad.length; i++)
+    {
+        pad[i].draw()
+    }
     ball.draw()
+
+
+     //update score display
+    for (let i = 0; i < sb.length; i++) 
+    {
+        sb[i].innerText = `Player ${i + 1}: ${player[i].score}`;
+    }
+    
 }
